@@ -37,4 +37,10 @@ export class LoginComponent implements OnInit {
       'Email: ' + this.email.value + ' Password: ' + this.password.value
     );
   }
+
+  getErrorMessage(): string | void {
+    if (this.password.hasError('required')) {
+      return 'You must enter  a password';
+    }
+  }
 }
