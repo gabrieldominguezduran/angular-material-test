@@ -1,3 +1,10 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -5,12 +12,24 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Credentials } from 'src/app/Models/credentials';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state(
+        'void',
+        style({
+          opacity: 0.2,
+        })
+      ),
+      transition('void <=> *', animate(1500)),
+    ]),
+  ],
 })
 export class LoginComponent implements OnInit {
   credentials: Credentials;
@@ -18,7 +37,7 @@ export class LoginComponent implements OnInit {
   password!: FormControl;
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router) {
     this.credentials = new Credentials();
   }
 
@@ -35,7 +54,8 @@ export class LoginComponent implements OnInit {
   checkLogin(): void {
     console.log(
       'Email: ' + this.email.value + ' Password: ' + this.password.value
-    );
+    ),
+      this.router.navigate(['cards']);
   }
 
   getErrorMessage(): string | void {
